@@ -45,9 +45,11 @@ define([
 			 */
 			initialize: function () {
 				// Event aggregator
-				_.bindAll(this, "remove");
-				tunnel.bind('remove', this.remove);
+				_.bindAll(this);
+				
 				tunnel.trigger('remove');
+				
+				tunnel.bind('remove', this.remove);
 				
 				this.model.on('change', this.updateFields, this);
 				this.model.on('destroy', this.remove, this);
@@ -121,6 +123,7 @@ define([
 			 * Override the default view remove method with custom actions
 			 */
 			remove: function () {
+				console.log("remove");
 				// unsubscribe from all model events with this context
 				this.model.off(null, null, this);
 				
@@ -129,6 +132,9 @@ define([
 				
 				// call backbones default view remove method
 				Backbone.View.prototype.remove.call(this);
+				
+				// Unbind the aggregated event
+				tunnel.unbind('remove');
 			}
 		}
 	);
