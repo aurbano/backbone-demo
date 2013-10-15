@@ -28,17 +28,8 @@
 				<button class="cancel"> Cancel </button>
 			</form>
 		</script>
-		<!-- Require.js and app loader via the data-main attribute -->
+		<!-- Require.js -->
 		<script type="text/javascript" src="lib/require.js"></script>
-		<!-- Application files -->
-		<!--<script type="text/javascript" src="js/model/commentmodel.js"></script>
-		<script type="text/javascript" src="js/model/commentcollection.js"></script>
-		<script type="text/javascript" src="js/view/commentview.js"></script>
-		<script type="text/javascript" src="js/view/formview.js"></script>
-		<script type="text/javascript" src="js/view/listview.js"></script>
-		<script type="text/javascript" src="js/view/newbuttonview.js"></script>
-		<script type="text/javascript" src="js/view/randombuttonview.js"></script>
-		<script type="text/javascript" src="js/app/app.js"></script>-->
 	</head>
 	<body>
 		<!-- Application container element -->
@@ -50,7 +41,7 @@
 		<!-- Application init -->
 		<script type="text/javascript" charset="utf-8">
 			// Basic configuration
-			// I decided to include full paths here to make it easier on the different files later on
+			// I decided to include full paths here for flexibility
 			requirejs.config({
 				'paths': {
 					// Main app
@@ -68,7 +59,7 @@
 					'jquery': 'lib/jquery',
 					'underscore': 'lib/underscore',
 					'backbone': 'lib/backbone',
-					'handlebars': 'lib/mustache',
+					'mustache': 'lib/mustache',
 				},
 				// Configure the libraries
 				'shim': {
@@ -78,6 +69,9 @@
 					'backbone': {
 						'deps': ['jquery', 'underscore'],
 						'exports': 'Backbone'
+					},
+					'mustache' : {
+						'exports' : 'Mustache'
 					}
 				}
 			});

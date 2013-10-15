@@ -1,17 +1,16 @@
-Backbone-demo
-=============
-Backbone-demo is a simple JS application to show you the basics of Backbone models, collections and views.
+Gawker technical assignment
+===========
 
+By Alejandro U. Álvarez
+http://urbanoalvarez.es
 
-Resources
----------
-* Backbone.js: [http://backbonejs.org/]
-* Underscore.js: [http://underscorejs.org/]
-* jQuery: [http://jquery.com/]
-* Mustache: [https://github.com/janl/mustache.js]
-* JSON parser: [https://github.com/douglascrockford/JSON-js]
-* JSDoc toolkit for documentation: [http://code.google.com/p/jsdoc-toolkit/]
+## Changes
+This file describes the changes done in the source code in order to meet the requirements.
 
-JSLint
-------
-You can find a JSLint configuration file under `resources/jslintrc`, TextMate plugin is available at [https://github.com/rondevera/jslintmate/]
+### Task 1
+The event to intercept was the cancel event on the formview.
+It's located in js/view/formview.js, I decided on a JS confirm() since I tried to maintain it as simple as possible.
+
+### Task 2
+Add Require.js file to the lib folder, decided on this vs cdn just in case you will test it offline.
+

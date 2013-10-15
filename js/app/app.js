@@ -11,7 +11,7 @@
  * @author Bodnar Istvan <istvan@gawker.com>
  */
 
-define(['jquery', 'backbone', 'commentcollection', 'newbuttonview', 'randombuttonview'], function($, Backbone, CommentCollection, NewButtonView, RandomButtonView) {
+define(['jquery', 'backbone', 'commentcollection', 'newbuttonview', 'randombuttonview', 'listview'], function($, Backbone, CommentCollection, NewButtonView, RandomButtonView, CommentlistView) {
 
     /*global CommentCollection, CommentlistView, FormView, NewButtonView, RandomButtonView */
 	var App = Backbone.View.extend(
