@@ -10,30 +10,36 @@
  * @extends Backbone.View
  * @author Bodnar Istvan <istvan@gawker.com>
  */
-/*global CommentCollection, CommentlistView, FormView, NewButtonView, RandomButtonView */
-var App = Backbone.View.extend(
-/** @lends App.prototype */
-	{
-		/**
-		 * Initialize new application instance
-		 */
-		initialize: function () {
-			// create empty comment collection
-			var collection = new CommentCollection();
-		
-			// bind the NewButtonView to the already rendered 'newcomment' DOM element, we'll need to know the
-			// collection to work with so FormView can insert the new comment properly
-			new NewButtonView({collection: collection, el: this.$el.find('.newcomment')});
-			
-			// bind the RandomButtonView to the already rendered 'randomcomment' DOM element
-			new RandomButtonView({collection: collection, el: this.$el.find('.randomcomment')});
 
-			// create comment list view, assign our empty collection
-			var listview = new CommentlistView({collection: collection, el: this.$el.find('.commentlist')});
-			listview.render();
+define(['jquery', 'backbone', 'commentcollection', 'newbuttonview', 'randombuttonview'], function($, Backbone, CommentCollection, NewButtonView, RandomButtonView) {
+
+    /*global CommentCollection, CommentlistView, FormView, NewButtonView, RandomButtonView */
+	var App = Backbone.View.extend(
+	/** @lends App.prototype */
+		{
+			/**
+			 * Initialize new application instance
+			 */
+			initialize: function () {
+				// create empty comment collection
+				var collection = new CommentCollection();
+			
+				// bind the NewButtonView to the already rendered 'newcomment' DOM element, we'll need to know the
+				// collection to work with so FormView can insert the new comment properly
+				new NewButtonView({collection: collection, el: this.$el.find('.newcomment')});
+				
+				// bind the RandomButtonView to the already rendered 'randomcomment' DOM element
+				new RandomButtonView({collection: collection, el: this.$el.find('.randomcomment')});
+	
+				// create comment list view, assign our empty collection
+				var listview = new CommentlistView({collection: collection, el: this.$el.find('.commentlist')});
+				listview.render();
+			}
 		}
-	}
-);
+	);
+	
+	return App;
+});
 
 
 /**

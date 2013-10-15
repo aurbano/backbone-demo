@@ -28,16 +28,17 @@
 				<button class="cancel"> Cancel </button>
 			</form>
 		</script>
-		
+		<!-- Require.js and app loader via the data-main attribute -->
+		<script type="text/javascript" src="lib/require.js"></script>
 		<!-- Application files -->
-		<script type="text/javascript" src="js/model/commentmodel.js"></script>
+		<!--<script type="text/javascript" src="js/model/commentmodel.js"></script>
 		<script type="text/javascript" src="js/model/commentcollection.js"></script>
 		<script type="text/javascript" src="js/view/commentview.js"></script>
 		<script type="text/javascript" src="js/view/formview.js"></script>
 		<script type="text/javascript" src="js/view/listview.js"></script>
 		<script type="text/javascript" src="js/view/newbuttonview.js"></script>
 		<script type="text/javascript" src="js/view/randombuttonview.js"></script>
-		<script type="text/javascript" src="js/app/app.js"></script>
+		<script type="text/javascript" src="js/app/app.js"></script>-->
 	</head>
 	<body>
 		<!-- Application container element -->
@@ -48,8 +49,44 @@
 		</div>
 		<!-- Application init -->
 		<script type="text/javascript" charset="utf-8">
-			new App({
-				el: $('#application')
+			// Basic configuration
+			// I decided to include full paths here to make it easier on the different files later on
+			requirejs.config({
+				'paths': {
+					// Main app
+					'app': 'js/app/app',
+					// Models
+					'commentcollection' : 'js/model/commentcollection',
+					'commentmodel' : 'js/model/commentmodel',
+					// Views
+					'commentview' : 'js/view/commentview',
+					'formview' : 'js/view/formview',
+					'listview' : 'js/view/listview',
+					'newbuttonview' : 'js/view/newbuttonview',
+					'randombuttonview' : 'js/view/randombuttonview',
+					// Libraries
+					'jquery': 'lib/jquery',
+					'underscore': 'lib/underscore',
+					'backbone': 'lib/backbone',
+					'handlebars': 'lib/mustache',
+				},
+				// Configure the libraries
+				'shim': {
+					'underscore': {
+						'exports': '_'
+					},
+					'backbone': {
+						'deps': ['jquery', 'underscore'],
+						'exports': 'Backbone'
+					}
+				}
+			});
+			// This would probably be better in main.js
+			// but I'm maintaining the original structure
+			require(['app'], function(App) {
+				new App({
+					el: $('#application')
+				});
 			});
 		</script>
 	</body>
