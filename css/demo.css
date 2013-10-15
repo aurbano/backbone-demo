@@ -1,19 +1,38 @@
 body {
-	font-family:'Lucida Casual', 'Comic Sans MS';
+	font-family:Helvetica, Arial, sans-serif;
 	font-size: 16px;
-	background-image: url(bg.jpg);
-	color: green;
+	color: #555;
 }
 
 #application {
 	padding: 25px;
 }
 
-.button {
+.button{
 	display: inline-block;
-	background-color: yellow;
-	border: 1px solid green;
+	background-color: white;
+	border: 2px solid #777;
+	border-radius:5px;
 	padding: 5px 10px;
+	text-decoration:none;
+	color:#555;
+}
+button{
+	background:#fff;
+	border:1px solid transparent;
+	padding:1px 3px;
+	border-radius:3px;
+	cursor:pointer;
+}
+.delete:hover, .cancel:hover{ color:red; }
+button:hover{
+	border:1px solid #ccc;
+	color:#1CA4FF;
+}
+.button:hover{
+	background:#1CA4FF;
+	border-color:#1CA4FF;
+	color:#fff;
 }
 
 .commentlist {
@@ -21,15 +40,14 @@ body {
 }
 
 .commentlist li {
-	margin-bottom: 10px;
+	margin-bottom: 0px;
 }
 
 .comment {
-	background-color: green;
-	border: 1px solid yellow;
-	color: yellow;
+	border-bottom:#AAAAAA solid 1px;
 	width: 400px;
 	min-height: 50px;
+	font-size:0.9em;
 }
 
 .comment button {
@@ -43,11 +61,9 @@ body {
 }
 
 .commentform {
-	background-color: yellow;
-	border: 1px solid green;
-	color: green;
+	background-color:#F3F3F3;
 	padding: 15px;
-	margin: 5px 0px 5px 30px;
+	margin: 25px 0px 25px 30px;
 	width: 400px;
 }
 
