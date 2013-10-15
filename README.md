@@ -20,8 +20,8 @@ Convert all files to modules, and done
 I believe that a Backbone view shouldn't know about other views. So this makes it a little tricky. The idea here is to ensure that all views are removed before rendering a new FormView view.
 After some consideration I have decided for an Event aggregator. Combining underscore's bindAll with a Backbone events element I can bind an event to all instances of Formview and call remove() on all of them when a new one is instantiated.
 This contradicts the requirement of Question #1, although in Question #3 it doesn't state that it should ask for confirmation so I will leave it this way.
-One would have to find the balance between better UX and a good implementation, it might be interesting to hide the current form view instead of removing it, so that the changes made are still there in case the user goes back to editing that one.
-Also if you write a new comment, and then try to edit another one, the new one gets closed without confirmation.
+The correct implementation from my point of view would be to wait for the user to change the fields in the form, and ask for confirmation in that case only.
+That would require us to monitor the form for changes, and binding another method that asks for confirmation if there are changes, before calling remove.
 
 ### Task 4
 I pre-render some html comments directly in index.html, in a real world scenario this would probably be done for search engines.
