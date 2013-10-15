@@ -11,7 +11,7 @@
  * @author Bodnar Istvan <istvan@gawker.com>
  */
 
-define(['jquery', 'backbone', 'commentcollection', 'newbuttonview', 'randombuttonview', 'listview'], function($, Backbone, CommentCollection, NewButtonView, RandomButtonView, CommentlistView) {
+define(['jquery', 'backbone', 'commentcollection', 'newbuttonview', 'randombuttonview', 'listview', 'commentmodel'], function($, Backbone, CommentCollection, NewButtonView, RandomButtonView, CommentlistView, CommentModel) {
 
     /*global CommentCollection, CommentlistView, FormView, NewButtonView, RandomButtonView */
 	var App = Backbone.View.extend(
@@ -30,7 +30,14 @@ define(['jquery', 'backbone', 'commentcollection', 'newbuttonview', 'randombutto
 				
 				// bind the RandomButtonView to the already rendered 'randomcomment' DOM element
 				new RandomButtonView({collection: collection, el: this.$el.find('.randomcomment')});
-	
+				
+				// I need to populate the collection with the pre-rendered comments
+				$.each(this.$el.find('.commentlist > li.comment'), function(){
+					collection.add(new CommentModel({
+						text: $(this).html().split('<br>')[1],
+						author: $(this).find('strong').text()
+					}));
+				});
 				// create comment list view, assign our empty collection
 				var listview = new CommentlistView({collection: collection, el: this.$el.find('.commentlist')});
 				listview.render();

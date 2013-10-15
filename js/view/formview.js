@@ -9,6 +9,10 @@ define([
   'jquery',
   'mustache'
 ], function($, Mustache){
+	
+	// Event aggregator
+	var tunnel = _.extend({}, Backbone.Events);
+	
 	/*global Mustache, CommentView, CommentModel */
 	var FormView = Backbone.View.extend(
 	/** @lends FormView.prototype */
@@ -40,6 +44,11 @@ define([
 			 * View init method, subscribing to model events
 			 */
 			initialize: function () {
+				// Event aggregator
+				_.bindAll(this, "remove");
+				tunnel.bind('remove', this.remove);
+				tunnel.trigger('remove');
+				
 				this.model.on('change', this.updateFields, this);
 				this.model.on('destroy', this.remove, this);
 			},
@@ -49,6 +58,7 @@ define([
 			 * @returns {FormView} Returns the view instance itself, to allow chaining view commands.
 			 */
 			render: function () {
+				// Close open view
 				var template = $('#form-template').text();
 				var template_vars = {
 					author: this.model.get('author'),
@@ -91,7 +101,7 @@ define([
 			*/
 			cancel: function () {
 				// make sure user wants to cancel
-				if(!confirm('Are you sure?')) return false;
+				if(!confirm('You will lose your changes! Do you want to continue?')) return false;
 				// clean up form
 				this.remove();
 				return false;
