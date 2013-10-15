@@ -41,7 +41,7 @@ define([
 				for (i = 0; i < 5; i++) {
 					this.collection.add(new CommentModel({
 						text: 'Random comment ' + Math.floor(Math.random() * 100),
-						author: 'serif'
+						author: 'sans-serif'
 					}));
 				}
 	
