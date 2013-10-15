@@ -25,11 +25,13 @@ That would require us to monitor the form for changes, and binding another metho
 
 ### Task 4
 I pre-render some html comments directly in index.html, in a real world scenario this would probably be done for search engines.
-It's not specified in the assingment really, but I'm trying to introduce as few modifications as possible, so I'm maintaining the current collection.add method.
-Since it takes the text and author as parameters, I could have added those parameters somewhere in the comments as html data- attributes, but that changes too much I think.
-So I decided to parse the comments and extract the author and text. I wouldn't really like this method on a real world application since it relies on the comments content, but for this example it works.
+It's not specified in the assingment really but I'm trying to introduce as few modifications as possible.
+Since collection.add() takes the text and author as parameters, I could have added them somewhere in the comments as html data- attributes, but that imples a bigger change from my point of view.
+I decided to parse the comments and extract the author and text. I wouldn't really like this method on a real world application since it relies on the comments content, but for this example with known content it will work.
 The parsed data is then added to the commentlist which gets re-rendered when everything loads.
 
 Why is the render method not practical?
-Precisely because of the last statement, the comments get re-rendered every time the render function is called! Although this seems to work fine, and many people would just leave it as is, a real commenting system with media embeds for example would suffer from it.
-A better implementation wouldn't render the whole list when a new comment is added or removed.
+Precisely because of the last statement, the comments get re-rendered every time a comment is added! Although this seems to work fine, and many people would just leave it as is, a real commenting system with media embeds for example would suffer from it.
+A better implementation wouldn't render the whole list when a new comment is added. In js/view/listview.js I have added the method "add", which does just that.
+
+This can be probably improved in many ways, but I don't think the goal of this assingment is to find the perfect implementation of the idea behind it, so I have just outlined some of my thoughts on it.

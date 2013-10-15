@@ -19,7 +19,22 @@ define([
 			 * Subscribe to collection 'reset' and 'add' events
 			 */
 			initialize: function () {
+				//this.collection.on('add', this.add, this);
 				this.collection.on('add reset', this.render, this);
+			},
+			
+			/**
+			 * If we uncomment the first event on initialize, and remove it from the second event,
+			 * this function will be called when new elements are added. Which will render them without
+			 * re-rendering the whole list. 
+			 */
+			add: function(element){
+				//this.$el.append(element.render());
+				var commentview = new CommentView({
+					model: element
+				});
+				this.$el.append(commentview.render().$el);
+				return this;
 			},
 			
 			/**
@@ -27,6 +42,7 @@ define([
 			 * @returns {CommentlistView} Returns the view instance itself, to allow chaining view commands.
 			 */
 			render: function () {
+				console.log("Rendering the whole list!");
 				// first clean up the container
 				this.$el.empty();
 				
