@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: view/commentview.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: view/commentview.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+ * Comment controller and view
+ * DOM event and comment model event handlers should live here.
+ * This view handles comment edit, delete and the sample text reverse actions, also
+ * listens to model change and destroy events to update the view in DOM.
+ *
+ * @class CommentView
+ * @extends Backbone.View
+ * @author Bodnar Istvan &lt;istvan@gawker.com>
+ */
+define([
+  'jquery',
+  'mustache',
+  'formview'
+], function($, Mustache, FormView){
+	/*global Mustache, FormView */
+	var CommentView = Backbone.View.extend(
+	/** @lends CommentView.prototype */
+		{
+			/**
+			 * Html tag name of the container element that'll be created when initializing new instance.
+			 * This container is then accessible via the this.el (native DOM node) or this.$el (jQuery node)
+			 * variables.
+			 * @type String
+			 */
+			tagName: 'li',
+		
+			/**
+			 * CSS class name of the container element
+			 * @type String
+			 */
+			className: 'comment',
+			
+			/**
+			 * The map of delegated event handlers
+			 * @type Object
+			 */
+			 events: {
+				'click .edit': 'edit',
+				'click .delete': 'delete',
+				'click .reverse': 'reverse'
+			},
+			
+			/**
+			 * View init method, subscribing to model events
+			 */
+			initialize: function () {
+				this.model.on('change', this.render, this);
+				this.model.on('destroy', this.remove, this);
+			},
+			
+			/**
+			 * Render the new comment DOM element from a template using Mustache
+			 * @returns {CommentView} Returns the view instance itself, to allow chaining view commands.
+			 */
+			render: function () {
+				// template is rendered in the main html, inside a &lt;script /> tag with the specified id
+				var template = $('#comment-template').text();
+	
+				// variables passed to the template for rendering
+				var template_vars = {
+					author: this.model.get('author'),
+					text: this.model.get('text')
+				};
+				
+				// set the inner html of the container element to the Mustache rendered output
+				this.$el.html(Mustache.to_html(template, template_vars));
+				return this;
+			},
+			
+			/**
+			 * Edit button click handler
+			 * @returns {Boolean} Returns false to stop propagation
+			 */
+			edit: function () {
+				// create new FormView instance to edit the comment
+				var formview = new FormView({model: this.model});
+				
+				// insert FormView instance after the comment container
+				this.$el.after(formview.render().$el);
+				
+				// listen to save success event to handle successful form submit event
+				formview.on('success', this.handleEditSuccess, this);
+				return false;
+			},
+			
+			/**
+			 * Delete button click handler
+			 * @returns {Boolean} Returns false to stop propagation
+			 */
+			delete: function () {
+				// delete model from memory
+				this.model.id = undefined;
+				this.model.destroy();
+	
+				// note: since the view is subscribed to the models 'destroy' event, view will be also removed
+				// automatically, no need to delete container form DOM
+				return false;
+			},
+			
+			/**
+			 * "Reverse" button click handler
+			 * @returns {Boolean} Returns false to stop propagation
+			 */
+			 reverse: function () {
+				// run the models sample text reverse method
+				this.model.reverseText();
+				return false;
+			},
+			
+			/**
+			 * Handles form save success event
+			 * @params {CommentModel} model Model returned by successful comment "save" action
+			 */
+			handleEditSuccess: function (model) {
+				// create a new notification that is removed after 5 seconds
+				var $notification = $('&lt;div />')
+										.text('Comment by ' + model.get('author') + ' is saved.')
+										.addClass('notification');
+				
+				// append notification to edited comments container element
+				this.$el.append($notification);
+				
+				// remove notification after 5 seconds
+				setTimeout(function () {
+					$notification.remove();
+				}, 5000);
+			},
+			
+			/**
+			 * Override the default view remove method with custom actions
+			 */
+			remove: function () {
+				// remove container element from DOM
+				this.$el.remove();
+			}
+		}
+	);
+	
+	return CommentView;
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="App.html">App</a></li><li><a href="Backbone.html">Backbone</a></li><li><a href="Backbone.Collection.html">Collection</a></li><li><a href="Backbone.Model.html">Model</a></li><li><a href="Backbone.View.html">View</a></li><li><a href="CommentCollection.html">CommentCollection</a></li><li><a href="CommentlistView.html">CommentlistView</a></li><li><a href="CommentModel.html">CommentModel</a></li><li><a href="CommentView.html">CommentView</a></li><li><a href="FormView.html">FormView</a></li><li><a href="NewButtonView.html">NewButtonView</a></li><li><a href="RandomButtonView.html">RandomButtonView</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Wed Oct 16 2013 11:57:21 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

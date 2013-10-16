@@ -4,7 +4,7 @@
 # Config options for the generator
 PROJECT_DIR=/www/backbone-demo/
 OUTPUT_DIR=$PROJECT_DIR/docs/
-JSDOCDIR=/usr/local/jsdoc
+JSDOCDIR=../jsdoc
 
 #######################################
 echo "Generating docs for $PROJECT_DIR"

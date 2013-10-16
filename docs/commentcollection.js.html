@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Index</title>
+    <title>JSDoc: Source: model/commentcollection.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,30 +17,41 @@
 
 <div id="main">
     
-    <h1 class="page-title">Index</h1>
+    <h1 class="page-title">Source: model/commentcollection.js</h1>
     
     
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+ * Collection for storing comment models
+ * Default sorting methods (comparator method) can be specified here
+ *
+ * @class CommentCollection
+ * @extends Backbone.Collection
+ * @author Bodnar Istvan &lt;istvan@gawker.com>
+ */
+define([
+  'commentmodel'
+], function($, CommentModel){
+	/*global CommentModel */
+	var CommentCollection = Backbone.Collection.extend(
+	/** @lends CommentCollection.prototype */
+		{
+			/**
+			 * Sets the allowed type of contained models
+			 * @type Backbone.Model
+			 */
+			model: CommentModel
+		}
+	);
+	
+	return CommentCollection;
+});</code></pre>
+        </article>
+    </section>
 
 
 
