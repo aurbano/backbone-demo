@@ -36,6 +36,7 @@ It uses the flag I mentioned in Task 1, plus an event aggregator to trigger the 
 I pre-render some comments directly in index.html, in a real world scenario this would probably be done for search engine optimization purposes.
 It's not specified in the assignment really but I'm trying to introduce as few modifications as possible.
 Since collection.add() takes the text and author as parameters, I could have added them somewhere in the comments as html data- attributes, but that implies more changes.
+
 I decided to parse the comments and extract the author and text. I wouldn't really like this method on a real world application since it relies on the comments content, but for this example with known content it will be fine.
 The parsed data is then added to the commentlist which gets re-rendered when everything loads.
 
