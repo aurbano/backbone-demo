@@ -13,6 +13,8 @@ define([
 	// Event aggregator
 	var tunnel = _.extend({}, Backbone.Events);
 	
+	var changed = false;
+	
 	/*global Mustache, CommentView, CommentModel */
 	var FormView = Backbone.View.extend(
 	/** @lends FormView.prototype */
@@ -24,6 +26,8 @@ define([
 			 * @type String
 			 */
 			tagName: 'div',
+			
+			allowRender: true,
 		
 			/**
 			 * CSS class name of the container element
@@ -37,7 +41,8 @@ define([
 			 */
 			events: {
 				'click .submit': 'submit',
-				'click .cancel': 'cancel'
+				'click .cancel': 'cancel',
+				'change .author, .text': 'change'
 			},
 			
 			/**
@@ -47,9 +52,20 @@ define([
 				// Event aggregator
 				_.bindAll(this);
 				
-				tunnel.trigger('remove');
+				if(changed){
+					if(!confirm('You will lose your changes! Do you want to continue?')){
+						// User doesn't want to lose changes, disallow rendering of new view
+						// and stop initializing the current one.
+						this.allowRender = false;
+						return false;
+					}	
+				}
 				
+				// Close all views
+				tunnel.trigger('remove');
 				tunnel.bind('remove', this.remove);
+				
+				changed = false;
 				
 				this.model.on('change', this.updateFields, this);
 				this.model.on('destroy', this.remove, this);
@@ -60,7 +76,8 @@ define([
 			 * @returns {FormView} Returns the view instance itself, to allow chaining view commands.
 			 */
 			render: function () {
-				// Close open view
+				// Stop view from rendering if user didn't want to lose changes
+				if(!this.allowRender) return false;
 				var template = $('#form-template').text();
 				var template_vars = {
 					author: this.model.get('author'),
@@ -91,6 +108,8 @@ define([
 				// trigger the 'success' event on form, with the returned model as the only parameter
 				this.trigger('success', this.model);
 				
+				// Reset changed
+				changed = false;
 				// remove form view from DOM and memory
 				this.remove();
 				return false;
@@ -103,10 +122,16 @@ define([
 			*/
 			cancel: function () {
 				// make sure user wants to cancel
-				if(!confirm('You will lose your changes! Do you want to continue?')) return false;
+				if(changed) if(!confirm('You will lose your changes! Do you want to continue?')) return false;
+				changed = false;
 				// clean up form
 				this.remove();
 				return false;
+			},
+			
+			change: function(){
+				console.log("Changed");
+				changed = true;
 			},
 			
 			/**
@@ -123,7 +148,9 @@ define([
 			 * Override the default view remove method with custom actions
 			 */
 			remove: function () {
-				console.log("remove");
+				console.log("Remove");
+				//if(changed) if(!confirm('You will lose your changes! Do you want to continue?')) return false;
+				//changed = false;
 				// unsubscribe from all model events with this context
 				this.model.off(null, null, this);
 				

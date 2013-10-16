@@ -17,6 +17,7 @@ define(['jquery', 'backbone', 'commentcollection', 'newbuttonview', 'randombutto
 	var App = Backbone.View.extend(
 	/** @lends App.prototype */
 		{
+			changed: false,
 			/**
 			 * Initialize new application instance
 			 */
