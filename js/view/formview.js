@@ -13,6 +13,7 @@ define([
 	// Event aggregator
 	var tunnel = _.extend({}, Backbone.Events);
 	
+	// Changed flag
 	var changed = false;
 	
 	/*global Mustache, CommentView, CommentModel */
@@ -27,6 +28,10 @@ define([
 			 */
 			tagName: 'div',
 			
+			/**
+			 * Determines whether the current element is allowed to render
+			 * @type Boolean 
+			 */
 			allowRender: true,
 		
 			/**
@@ -52,6 +57,7 @@ define([
 				// Event aggregator
 				_.bindAll(this);
 				
+				// If this or other view has changed, check if user wants to discard the changes
 				if(changed){
 					if(!confirm('You will lose your changes! Do you want to continue?')){
 						// User doesn't want to lose changes, disallow rendering of new view
@@ -65,6 +71,7 @@ define([
 				tunnel.trigger('remove');
 				tunnel.bind('remove', this.remove);
 				
+				// Since this is a new view, no changes have been made
 				changed = false;
 				
 				this.model.on('change', this.updateFields, this);
@@ -110,18 +117,19 @@ define([
 				
 				// Reset changed
 				changed = false;
+				
 				// remove form view from DOM and memory
 				this.remove();
 				return false;
 			},
 			
 			/**
-			* Cancel button click handler
+			* Cancel button click handler. If changes had been made, it asks the user for confirmation
 			* Cleans up form view from DOM
 			* @returns {Boolean} Returns false to stop propagation
 			*/
 			cancel: function () {
-				// make sure user wants to cancel
+				// Make sure user wants to cancel
 				if(changed) if(!confirm('You will lose your changes! Do you want to continue?')) return false;
 				changed = false;
 				// clean up form
@@ -129,8 +137,10 @@ define([
 				return false;
 			},
 			
+			/**
+			 * Detect changes in current view, updates the changed flag. 
+			 */
 			change: function(){
-				console.log("Changed");
 				changed = true;
 			},
 			
@@ -148,9 +158,6 @@ define([
 			 * Override the default view remove method with custom actions
 			 */
 			remove: function () {
-				console.log("Remove");
-				//if(changed) if(!confirm('You will lose your changes! Do you want to continue?')) return false;
-				//changed = false;
 				// unsubscribe from all model events with this context
 				this.model.off(null, null, this);
 				

@@ -42,7 +42,6 @@ define([
 			 * @returns {CommentlistView} Returns the view instance itself, to allow chaining view commands.
 			 */
 			render: function () {
-				console.log("Rendering the whole list!");
 				// first clean up the container
 				this.$el.empty();
 				
