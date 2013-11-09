@@ -1,4 +1,4 @@
-Backbone, Mustache and Underscore demo
+Backbone, Mustache and Underscore
 ===========
 This demo features a commenting system based on Backbone, Mustache and Underscore. It could easily be extended to load and save comments from a real datastore or API.
 
