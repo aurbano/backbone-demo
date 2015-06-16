@@ -30,3 +30,5 @@ It uses a global flag, plus an event aggregator to trigger the remove method on 
 Based on https://github.com/bodnaristvan/backbone-demo
 
 Alejandro U. Álvarez - http://urbanoalvarez.es
+
+[![Analytics](https://ga-beacon.appspot.com/UA-3181088-16/backbone-demo/readme)](https://github.com/aurbano)
