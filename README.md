@@ -4,7 +4,7 @@ This demo features a commenting system based on Backbone, Mustache and Underscor
 
 It was done as a requirement for a job application, the app structure and some initial coding were provided.
 
-Demo: http://github.urbanoalvarez.es/backbone-demo/
+Demo: http://urbanoalvarez.es/backbone-demo/
 
 ###Features
 * There are initially some comments that are preloaded in the HTML, the backbone collection loads these prerendered comments on initialization.
